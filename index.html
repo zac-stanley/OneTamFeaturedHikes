@@ -118,8 +118,27 @@
         ext: 'png'
       }).addTo(map);
 
-    L.geoJson(featuredTrailHeads).addTo(map);
+      //STOPPED AT ADDING ICONS
     
+   // L.geoJson(featuredTrailHeads).addTo(map);
+   L.geoJson(featuredTrailHeads, {
+     pointToLayer: function(feature, latLng) {
+
+     }
+   }).addTo(map);
+    // create SVG icon
+  //  var fTrailIcon = L.icon({
+ //     iconUrl: 'SVGs/noun_Hiker_562.svg',
+  //    iconSize: [40, 40]
+ //   });
+
+ //   L.geoJson(featuredTrailHeads, {
+ //     pointToLayer: function(feature, latLng) {
+ //       return L.marker(latLng,{
+ //         icon: fTrailIcon
+ //       })
+//      }
+ //   }).addTo(map);
 
 
 
