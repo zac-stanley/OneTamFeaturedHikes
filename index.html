@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset=utf-8 />
+  <title>One Tam Feautre Hikes</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <!-- Is the is the latest version of Leaflet? -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: rgb(43, 43, 43);
+      font-family: "Lato", sans-serif;
+      font-size: 100%;
+      font-weight: 300;
+      color: rgb(172, 172, 172);
+    }
+
+    header,
+    footer,
+    section {
+      padding: 6px 10%;
+      margin: 0 auto;
+      width: 80%
+    }
+
+    h1 {
+      display: inline-block;
+      margin-right: 20px;
+      color: rgb(190, 190, 190);
+      font-size: 3.5em;
+      font-weight: 700;
+    }
+
+    h2 {
+      display: inline-block;
+      color: rgba(255, 200, 0, 0.8);
+      letter-spacing: 0.05em;
+      margin-top: 0px;
+      font-weight: 300;
+      text-transform: uppercase;
+      border-bottom: 1px dotted rgba(255, 200, 0, 0.5);
+      ;
+    }
+    h3 {
+      margin: 0;
+      padding: 0;
+      font-family: "Lato", sans-serif;
+      color: #083359;
+      font-size: 1em;
+      font-weight: 600;
+      
+    }
+    h4 {
+      margin: 0;
+      padding: 0;
+      font-family: "Lato", sans-serif;
+      color: #D90D0D;
+      font-size: 1em;
+      font-weight: 600;
+    }
+    h5 {
+      margin: 0;
+      padding: 0;
+      font-family: "Lato", sans-serif;
+      color: #F2A516;
+      font-size: 1em;
+      font-weight: 600;
+    }
+
+    #map {
+      width: 80%;
+      height: 540px;
+      margin: 10px auto;
+    }
+
+    p {
+      font-size: 1em;
+      color: rgba(170, 170, 170);
+      ;
+      font-weight: 300;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Home Finder</h1>
+    <h2>Food Stores, Fire Protection and Afterschool Care</h2>
+  </header>
+
+  <div id='map'></div>
+
+  <footer>
+    <p>Map authored by Zac Stanley</p>
+    <p>This map shows food stores, fire stations and after school programs within 1 kilometer of anywhere you click on the map. All features outside of that area will fade out. Refresh to start a new search area!</p>
+  </footer>
+  <!-- Is the is the latest version of Leaflet? -->
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+  <script src="data/OneTamFeaturedTrailheads.js"></script>
+  <script src="data/OneTamFeaturedTrails.js"></script>
+  <script src="data/OneTamMinorTrailheads.js"></script>
+  <script>
+    var map = L.map('map', {
+      center: [37.887914, -122.578138],
+      zoom: 12,
+    });
+
+      var tiles = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain-background/{z}/{x}/{y}{r}.{ext}', {
+        attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        subdomains: 'abcd',
+        maxZoom: 18,
+        ext: 'png'
+      }).addTo(map);
+
+    L.geoJson(featuredTrailHeads).addTo(map);
+    
+
+
+
+    L.geoJson(featuredTrails).addTo(map);
+      
+    </script>
