@@ -3,7 +3,7 @@
 
 <head>
   <meta charset=utf-8 />
-  <title>One Tam Feautre Hikes</title>
+  <title>One Tam Featured Hikes</title>
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
   <!-- Is the is the latest version of Leaflet? -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
@@ -13,94 +13,22 @@
     body {
       margin: 0;
       padding: 0;
-      background: rgb(43, 43, 43);
-      font-family: "Lato", sans-serif;
-      font-size: 100%;
-      font-weight: 300;
-      color: rgb(172, 172, 172);
+
     }
 
-    header,
-    footer,
-    section {
-      padding: 6px 10%;
-      margin: 0 auto;
-      width: 80%
+    html, body, #map {
+      height: 100%;
+      width: 100%
     }
 
-    h1 {
-      display: inline-block;
-      margin-right: 20px;
-      color: rgb(190, 190, 190);
-      font-size: 3.5em;
-      font-weight: 700;
-    }
-
-    h2 {
-      display: inline-block;
-      color: rgba(255, 200, 0, 0.8);
-      letter-spacing: 0.05em;
-      margin-top: 0px;
-      font-weight: 300;
-      text-transform: uppercase;
-      border-bottom: 1px dotted rgba(255, 200, 0, 0.5);
-      ;
-    }
-    h3 {
-      margin: 0;
-      padding: 0;
-      font-family: "Lato", sans-serif;
-      color: #083359;
-      font-size: 1em;
-      font-weight: 600;
-      
-    }
-    h4 {
-      margin: 0;
-      padding: 0;
-      font-family: "Lato", sans-serif;
-      color: #D90D0D;
-      font-size: 1em;
-      font-weight: 600;
-    }
-    h5 {
-      margin: 0;
-      padding: 0;
-      font-family: "Lato", sans-serif;
-      color: #F2A516;
-      font-size: 1em;
-      font-weight: 600;
-    }
-
-    #map {
-      width: 80%;
-      height: 540px;
-      margin: 10px auto;
-    }
-
-    p {
-      font-size: 1em;
-      color: rgba(170, 170, 170);
-      ;
-      font-weight: 300;
-      font-size: 1.2em;
-    }
   </style>
 </head>
 
 <body>
-  <header>
-    <h1>Home Finder</h1>
-    <h2>Food Stores, Fire Protection and Afterschool Care</h2>
-  </header>
 
   <div id='map'></div>
 
-  <footer>
-    <p>Map authored by Zac Stanley</p>
-    <p>This map shows food stores, fire stations and after school programs within 1 kilometer of anywhere you click on the map. All features outside of that area will fade out. Refresh to start a new search area!</p>
-  </footer>
-  <!-- Is the is the latest version of Leaflet? -->
+   <!-- Is the is the latest version of Leaflet? -->
   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
   <script src="data/OneTamFeaturedTrailheads.js"></script>
   <script src="data/OneTamFeaturedTrails.js"></script>
@@ -116,32 +44,25 @@
         subdomains: 'abcd',
         maxZoom: 18,
         ext: 'png'
-      }).addTo(map);
+      });
+      tiles.addTo(map);
 
-      //STOPPED AT ADDING ICONS
+    // create SVG icon
+   var fTrailIcon = L.icon({
+      iconUrl: 'SVGs/noun_Trail_549646-01.svg',
+      iconSize: [40, 40]
+    });
     
    // L.geoJson(featuredTrailHeads).addTo(map);
    L.geoJson(featuredTrailHeads, {
      pointToLayer: function(feature, latLng) {
-
+      return L.marker(latLng, {
+        icon: fTrailIcon
+      });     
      }
    }).addTo(map);
-    // create SVG icon
-  //  var fTrailIcon = L.icon({
- //     iconUrl: 'SVGs/noun_Hiker_562.svg',
-  //    iconSize: [40, 40]
- //   });
 
- //   L.geoJson(featuredTrailHeads, {
- //     pointToLayer: function(feature, latLng) {
- //       return L.marker(latLng,{
- //         icon: fTrailIcon
- //       })
-//      }
- //   }).addTo(map);
-
-
-
-    L.geoJson(featuredTrails).addTo(map);
+  // make these only display on zoomTo
+  L.geoJson(featuredTrails).addTo(map);
       
     </script>
