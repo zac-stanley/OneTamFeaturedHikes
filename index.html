@@ -48,19 +48,34 @@
       tiles.addTo(map);
 
     // create SVG icon
-   var fTrailIcon = L.icon({
-      iconUrl: 'SVGs/noun_Trail_549646-01.svg',
-      iconSize: [40, 40]
-    });
+ //  var fTrailIcon = L.icon({
+ //     iconUrl: 'SVGs/noun_Trail_549646-01.svg',
+ //     iconSize: [40, 40]
+ //   });
     
-   // L.geoJson(featuredTrailHeads).addTo(map);
-   L.geoJson(featuredTrailHeads, {
-     pointToLayer: function(feature, latLng) {
-      return L.marker(latLng, {
-        icon: fTrailIcon
-      });     
-     }
+  // Define variable for west peak so we can control on click behavior 
+  var westPeak = L.geoJson(featuredTrailHeads, {
+   pointToLayer: function(feature, latLng) {
+    return L.circleMarker(latLng);
+    },
+    // set marker style
+    style: function (feature) {
+      return {
+      color: '#000000',
+      fillColor: '#f6c65b',
+      weight: 1,
+      stroke: 1,
+      fillOpacity: 1,
+      radius: 5
+      }
+    }
    }).addTo(map);
+
+
+   
+
+
+
 
   // make these only display on zoomTo
   L.geoJson(featuredTrails).addTo(map);
