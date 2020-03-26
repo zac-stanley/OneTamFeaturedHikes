@@ -64,12 +64,13 @@
     }
    }).addTo(map); 
 
- var trailsLayer =  L.geoJson(featuredTrails, {
-    
-filter: function(feature) {
-   if (feature.properties.trailName["West Peak Loop"])
-   console.log(feature.properties.trailName["West Peak Loop"])
-    
+   var trailsLayer =  L.geoJson(featuredTrails, {
+    pointToLayer: function(feature, latLngs){
+      return L.polyline (feature, latLngs);
+    },
+     
+  filter: function(feature, latLngs) {
+   if (feature.properties.trailName == "West Peak Loop") 
           return feature;
   },
  }).addTo(map); 
