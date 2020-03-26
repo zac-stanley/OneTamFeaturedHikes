@@ -64,7 +64,7 @@
     }
    }).addTo(map); 
 
-   var bounds = L.latLngBounds();
+   var bounds = L.latLngBounds(feature.properties.trailName == "West Peak Loop");
 
    var trailsLayer =  L.geoJson(featuredTrails, {
     pointToLayer: function(feature, latLngs){
