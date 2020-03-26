@@ -32,7 +32,6 @@
   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
   <script src="data/OneTamFeaturedTrailheads.js"></script>
   <script src="data/OneTamFeaturedTrails.js"></script>
-  <script src="data/OneTamMinorTrailheads.js"></script>
   <script>
     var map = L.map('map', {
       center: [37.887914, -122.578138],
@@ -72,6 +71,30 @@
    }).addTo(map); 
 
   // make these only display on zoomTo
-  L.geoJson(featuredTrails).addTo(map);
+ var trailsLayer =  L.geoJson(featuredTrails, {
+   pointToLayer: function(feature, latLngs){
+     return L.polyline (feature, latLngs);
+   },
+  filter: function(feature, latLngs) {
+    if (feature.properties.trailName["West Peak Loop"])
+    
+          return feature
+   }
+
+   //  style: function (feature) {
+  //  return {
+  //    color: '#FFFF00',
+  //    opacity: .5,
+  //    weight: 3
+ //   }
+//  }
+
+ 
+  
+ }).addTo(map);
+
+//   var wpbounds = L.latLngBounds();
+
+
       
     </script>
