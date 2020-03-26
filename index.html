@@ -70,14 +70,29 @@
     }
    }).addTo(map); 
 
+  //  Get list of all names for all segments
+   var allTrails = {}
+    for (trail of featuredTrails.features) {
+      var name = trail.properties.trailName
+      if (name != null) {
+        if (!allTrails[name]) {
+          allTrails[name] = 1
+
+        } else {
+          allTrails[name] += 1
+        }
+      }
+    }
+    console.log(allTrails)
+
   // make these only display on zoomTo
  var trailsLayer =  L.geoJson(featuredTrails, {
    pointToLayer: function(feature, latLngs){
      return L.polyline (feature, latLngs);
    },
-  filter: function(feature, latLngs) {
-    if (feature.properties.trailName["West Peak Loop"])
-    
+  filter: function(feature) {
+    // Test for equivalence, then return feature
+    if (feature.properties.trailName == "West Peak Loop")
           return feature
    }
 
