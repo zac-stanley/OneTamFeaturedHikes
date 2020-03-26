@@ -70,7 +70,7 @@
     }
    }).addTo(map); 
 
-  // make these only display on zoomTo
+  
  var trailsLayer =  L.geoJson(featuredTrails, {
    pointToLayer: function(feature, latLngs){
      return L.polyline (feature, latLngs);
