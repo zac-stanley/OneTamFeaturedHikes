@@ -68,15 +68,20 @@
   //  Get list of all names for all segments
    var allTrails = {} // variable assigned to empty object to hold variable names for each leaflet geoJson layer
    // loop through allTrails object, trail is property name of the feature properties in geoJson -- need clarity on use of "of" here
+  //  The for .. of loops through an array. It's an update of this: for(var i = 0; i < myArray.length; i++ )
     for (trail of featuredTrails.features) {
       // assign variable to trailName value
       var name = trail.properties.trailName
       // if name is not equal to null in name variable
       if (name != null) {
         // if not all allTrails accessing trailName through [name] array
-        if (!allTrails[name]) {
-          allTrails[name] = 1 // I'm not clear on what's happening with these operands here and in the else statement
 
+        // This if statement adds the trail name to a JS object and the number of times the segment is found
+        // if the key is not in the object...
+        if (!allTrails[name]) {
+          // ... assign the key in the object and give it a value of 1
+          allTrails[name] = 1 // I'm not clear on what's happening with these operands here and in the else statement
+          // else it is found in the object, add 1 to the existing value
         } else {
           allTrails[name] += 1
         }
@@ -123,3 +128,5 @@
  map.fitBounds(bounds)
      
     </script>
+</body>
+</html>
