@@ -45,14 +45,8 @@
         ext: 'png'
       });
       tiles.addTo(map);
-
-    // create SVG icon
- //  var fTrailIcon = L.icon({
- //     iconUrl: 'SVGs/noun_Trail_549646-01.svg',
- //     iconSize: [40, 40]
- //   });
-    
-  // Define variable for west peak so we can control on click behavior 
+  
+  
   var westPeak = L.geoJson(featuredTrailHeads, {
    pointToLayer: function(feature, latLng) {
     return L.circleMarker(latLng);
@@ -70,6 +64,7 @@
     }
    }).addTo(map); 
 
+    // eval from Boyd
   //  Get list of all names for all segments
    var allTrails = {}
     for (trail of featuredTrails.features) {
@@ -103,13 +98,24 @@
   //    weight: 3
  //   }
 //  }
+=======
+   var bounds = L.latLngBounds(feature.properties.trailName == "West Peak Loop");
+// Zac master
+
+   var trailsLayer =  L.geoJson(featuredTrails, {
+    pointToLayer: function(feature, latLngs){
+      return L.polyline (feature, latLngs);
+    },
+     
+  filter: function(feature, latLngs) {
+   if (feature.properties.trailName == "West Peak Loop") 
+          return feature;
+  },
+  
+ }).addTo(map); 
 
  
-  
- }).addTo(map);
 
-//   var wpbounds = L.latLngBounds();
-
-
-      
+ map.fitBounds(bounds)
+     
     </script>
