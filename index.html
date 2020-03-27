@@ -66,12 +66,16 @@
 
     // eval from Boyd
   //  Get list of all names for all segments
-   var allTrails = {}
+   var allTrails = {} // variable assigned to empty object to hold variable names for each leaflet geoJson layer
+   // loop through allTrails object, trail is property name of the feature properties in geoJson -- need clarity on use of "of" here
     for (trail of featuredTrails.features) {
+      // assign variable to trailName value
       var name = trail.properties.trailName
+      // if name is not equal to null in name variable
       if (name != null) {
+        // if not all allTrails accessing trailName through [name] array
         if (!allTrails[name]) {
-          allTrails[name] = 1
+          allTrails[name] = 1 // I'm not clear on what's happening with these operands here and in the else statement
 
         } else {
           allTrails[name] += 1
@@ -89,7 +93,7 @@
     // Test for equivalence, then return feature
     if (feature.properties.trailName == "West Peak Loop")
           return feature
-   }
+   },
 
    //  style: function (feature) {
   //  return {
@@ -98,19 +102,19 @@
   //    weight: 3
  //   }
 //  }
-=======
-   var bounds = L.latLngBounds(feature.properties.trailName == "West Peak Loop");
+
+//   var bounds = L.latLngBounds(feature.properties.trailName == "West Peak Loop");
 // Zac master
 
-   var trailsLayer =  L.geoJson(featuredTrails, {
-    pointToLayer: function(feature, latLngs){
-      return L.polyline (feature, latLngs);
-    },
+  // var trailsLayer =  L.geoJson(featuredTrails, {
+ //   pointToLayer: function(feature, latLngs){
+  //    return L.polyline (feature, latLngs);
+//    },
      
-  filter: function(feature, latLngs) {
-   if (feature.properties.trailName == "West Peak Loop") 
-          return feature;
-  },
+//  filter: function(feature, latLngs) {
+//   if (feature.properties.trailName == "West Peak Loop") 
+//          return feature;
+//  },
   
  }).addTo(map); 
 
