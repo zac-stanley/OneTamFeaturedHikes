@@ -89,16 +89,57 @@
     }
     console.log(allTrails)
 
-  // make these only display on zoomTo
- var trailsLayer =  L.geoJson(featuredTrails, {
-   pointToLayer: function(feature, latLngs){
-     return L.polyline (feature, latLngs);
-   },
-  filter: function(feature) {
-    // Test for equivalence, then return feature
-    if (feature.properties.trailName == "West Peak Loop")
-          return feature
-   },
+    // Create an object of trail properties
+    var trailProps = {
+      "West Peak Loop": {
+        color: "red",
+        info: `<h2>West Peak Loop</h2>Some info <img src='https://www.onetam.org/sites/default/files/trails/trail_westpeak01.jpg' width='300px'>`
+      }
+    }
+
+    // Create empty object to contain geoJSON objects of trails
+    var trailsGeoJSON = {}
+
+  // Loop through properties and assign them to the trails
+  for (trail in trailProps) {
+    
+    trailsGeoJSON[trail] = L.geoJson(featuredTrails, {
+      pointToLayer: function(feature, latLngs){
+        return L.polyline (feature, latLngs);
+      },
+      filter: function(feature) {
+        // Test for equivalence, then return feature
+        if (feature.properties.trailName == trail)
+              return feature
+      },
+      style: function(feature) {
+        if (feature.properties.trailName == trail)
+              return {"color": trailProps[trail].color}
+
+      }, 
+      onEachFeature: function(feature, layer) {
+        if (feature.properties.trailName == trail) {
+          layer.bindPopup(trailProps[trail].info)
+        }
+
+      }
+      }).addTo(map); 
+  }
+  // loop through the geoJSONs and add event when clicked
+  for (trail in trailsGeoJSON) {
+    trailsGeoJSON[trail].on("click", function(e){
+      map.fitBounds(trailsGeoJSON[trail].getBounds())
+    })
+  }
+//  var trailsLayer =  L.geoJson(featuredTrails, {
+//    pointToLayer: function(feature, latLngs){
+//      return L.polyline (feature, latLngs);
+//    },
+//   filter: function(feature) {
+//     // Test for equivalence, then return feature
+//     if (feature.properties.trailName == "West Peak Loop")
+//           return feature
+//    },
 
    //  style: function (feature) {
   //  return {
@@ -121,11 +162,11 @@
 //          return feature;
 //  },
   
- }).addTo(map); 
+
 
  
 
- map.fitBounds(bounds)
+//  map.fitBounds(bounds)
      
     </script>
 </body>
