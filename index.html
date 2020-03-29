@@ -18,15 +18,29 @@
 
     html, body, #map {
       height: 100%;
-      width: 100%
+      width: 100%;
+    }
+
+    /*  play with style of info box */
+    #info {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      width: 300px;
+      z-index: 4444;
+      background-color:#f1f1f1;
+      padding: 10px;
+      display: none;
     }
 
   </style>
 </head>
 
 <body>
-
+  <div id='info'>weqewe</div>
   <div id='map'></div>
+
+  
 
    <!-- Is the is the latest version of Leaflet? -->
   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
@@ -55,7 +69,7 @@
     style: function (feature) {
       return {
       color: '#000000',
-      fillColor: '#f6c65b',
+      fillColor: '#2a5479',
       weight: 1,
       stroke: 1,
       fillOpacity: 1,
@@ -64,22 +78,116 @@
     }
    }).addTo(map); 
 
-   var bounds = L.latLngBounds(feature.properties.trailName == "West Peak Loop");
+    // eval from Boyd
+  //  Get list of all names for all segments
+   var allTrails = {} // variable assigned to empty object to hold variable names for each leaflet geoJson layer
+   // loop through allTrails object, trail is property name of the feature properties in geoJson
+  //  The for .. of loops through an array. It's an update of this: for(var i = 0; i < myArray.length; i++ )
+    for (trail of featuredTrails.features) {
+      // assign variable to trailName value
+      var name = trail.properties.trailName
+      // if not all allTrails accessing trailName through [name] array
+      if (name != null) {
+       
+        // This if statement adds the trail name to a JS object (allTrails variable) and the number of times the segment is found
+        // if the key (is this not the value rather than the key, if talking about key: value pair in object?) is not in the object...
+        if (!allTrails[name]) {
+          // ... assign the key in the object and give it a value of 1
+          allTrails[name] = 1 
+          // else it is found in the object, add 1 to the existing value and thus counts total number of features in object (67 for west peak) as displayed in console log
+        } else {
+          allTrails[name] += 1
+        }
+      }
+    }
+    console.log(allTrails)
 
-   var trailsLayer =  L.geoJson(featuredTrails, {
-    pointToLayer: function(feature, latLngs){
-      return L.polyline (feature, latLngs);
-    },
+    // Create an object of trail properties
+    var trailProps = {
+      // looking for the value here in line 128, testing for equivalence
+      "West Peak Loop": {
+        color: "#f6c65b",
+        info: `<h2>West Peak Loop</h2>Some info <img src='https://www.onetam.org/sites/default/files/trails/trail_westpeak01.jpg' width='300px'>`, // don't want longform paragraphs here, I have all the text in the OneTamFeatureTrailHeads.js, should I access that here?
+        stats: `<h2>West Peak Loop</h2><b>Miles:</b> 11 mi<br><b>Difficulty</b>: Mindbending`
+      }
+    }
+
+    // Create empty object to contain geoJSON objects of trails
+    var trailsGeoJSON = {}
+
+  // Loop through properties and assign them to the trails
+  for (trail in trailProps) {
+    // assign variable of the empty object with [trail] array
+    trailsGeoJSON[trail] = L.geoJson(featuredTrails, {
+      // is point to layer ok for use on polylines?
+      pointToLayer: function(feature, latLngs){
+        return L.polyline (feature, latLngs);
+      },
+      filter: function(feature) {
+        // Test for equivalence, then return feature
+        if (feature.properties.trailName == trail)
+              return feature
+      },
+      style: function(feature) {
+        if (feature.properties.trailName == trail)
+              return {"color": trailProps[trail].color}
+
+      }, 
+      onEachFeature: function(feature, layer) {
+        if (feature.properties.trailName == trail) {
+          layer.bindPopup(trailProps[trail].stats)
+        }
+
+      }
+      }).addTo(map); 
+  }
+  // loop through the geoJSONs and add event when clicked
+  for (trail in trailsGeoJSON) {
+    trailsGeoJSON[trail].on("click", function(e){
+      map.fitBounds(trailsGeoJSON[trail].getBounds())
+      var div = document.getElementById("info")
+      div.style.display= "inherit"
+      // use the trailsProp object to populate info
+      div.innerHTML = trailProps[trail].info
+    })
+  }
+//  var trailsLayer =  L.geoJson(featuredTrails, {
+//    pointToLayer: function(feature, latLngs){
+//      return L.polyline (feature, latLngs);
+//    },
+//   filter: function(feature) {
+//     // Test for equivalence, then return feature
+//     if (feature.properties.trailName == "West Peak Loop")
+//           return feature
+//    },
+
+   //  style: function (feature) {
+  //  return {
+  //    color: '#FFFF00',
+  //    opacity: .5,
+  //    weight: 3
+ //   }
+//  }
+
+//   var bounds = L.latLngBounds(feature.properties.trailName == "West Peak Loop");
+// Zac master
+
+  // var trailsLayer =  L.geoJson(featuredTrails, {
+ //   pointToLayer: function(feature, latLngs){
+  //    return L.polyline (feature, latLngs);
+//    },
      
-  filter: function(feature, latLngs) {
-   if (feature.properties.trailName == "West Peak Loop") 
-          return feature;
-  },
+//  filter: function(feature, latLngs) {
+//   if (feature.properties.trailName == "West Peak Loop") 
+//          return feature;
+//  },
   
- }).addTo(map); 
+
 
  
 
- map.fitBounds(bounds)
+//  map.fitBounds(bounds)
      
     </script>
+</body>
+</html>
