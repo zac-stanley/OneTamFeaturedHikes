@@ -101,8 +101,8 @@
         },
         "Redwood Creek Trail Loop": {
           color: "red",
-          info: `<h2>West Peak Loop</h2>Some info <img src='https://www.onetam.org/sites/default/files/trails/trail_westpeak01.jpg' width='300px'>`,
-          stats: `<h2>West Peak Loop</h2><b>Miles:</b> 11 mi<br><b>Difficulty</b>: Mindbending`
+          info: `<h2>Redwood Creek Trail Loop</h2>Some info <img src='https://www.onetam.org/sites/default/files/trails/trail_westpeak01.jpg' width='300px'>`,
+          stats: `<h2>Redwood Creek Trail Loop</h2><b>Miles:</b> 11 mi<br><b>Difficulty</b>: Mindbending`
           
       }
     };
@@ -137,18 +137,19 @@
     }).addTo(map); 
   }
   // loop through the geoJSONs and add event when clicked
-  
-    for (trail in trailsGeoJSON) {
-      console.log(trail, trailProps)
-      //click on trail found in zooms to extent of that trail
-      trailsGeoJSON[trail].on("click", function (e) {
+  // Click map, then see if clicked point is inside the bounds of a trail
+  map.on("click", function (e) {
+    for (var trail in trailsGeoJSON) {
+      if (trailsGeoJSON[trail].getBounds().contains(e.latlng)) {
         map.fitBounds(trailsGeoJSON[trail].getBounds())
         var div = document.getElementById("info")
         div.style.display = "inherit"
         // use the trailsProp object to populate info
         div.innerHTML = trailProps[trail].info
-      })
-  }
+      }
+    } 
+  });
+  // }
 //  var trailsLayer =  L.geoJson(featuredTrails, {
 //    pointToLayer: function(feature, latLngs){
 //      return L.polyline (feature, latLngs);
