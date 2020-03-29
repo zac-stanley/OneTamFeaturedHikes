@@ -64,25 +64,7 @@
         maxZoom: 18,
         ext: 'png'
       });
-      tiles.addTo(map);
-  
-  
-  var westPeak = L.geoJson(featuredTrailHeads, {
-   pointToLayer: function(feature, latLng) {
-    return L.circleMarker(latLng);
-    },
-    // set marker style
-    style: function (feature) {
-      return {
-      color: '#000000',
-      fillColor: '#2a5479',
-      weight: 1,
-      stroke: 1,
-      fillOpacity: 1,
-      radius: 5
-      }
-    }
-   }).addTo(map); 
+      tiles.addTo(map); 
 
   //  Get list of all names for all segments
    var allTrails = {} // variable assigned to empty object to hold variable names for each leaflet geoJson layer
@@ -113,39 +95,23 @@
     // Create an object of trail properties
     var trailProps = {
       "West Peak Loop": {
-        color: "red",
-        info: `<h2>West Peak Loop</h2>Some info <img src='https://www.onetam.org/sites/default/files/portfolio-images/project_westpeak03.jpg' width='300px'>`
-       // stats: `<h2>West Peak Loop</h2><b>Miles:</b> 11 mi<br><b>Difficulty</b>: Mindbending`
-      },
-      "Redwood Creek Trail Loop": {
-        color: "red",
-        info: `<h2>Redwood Creek Trail Loop</h2>Some info <img src='https://www.parksconservancy.org/sites/default/files/styles/basic/public/PRSF_2010_ATB_654_2x1.jpg?itok=TvyJPJbI' width='300px'>`
-        //stats: `<h2>West Peak Loop</h2><b>Miles:</b> 11 mi<br><b>Difficulty</b>: Mindbending`
-    },
-      "Mountain Home Inn Loop": {
-        color: "red",
-        info: `<h2>Mountain Home Inn Loop</h2>
-        <img src='https://www.parksconservancy.org/sites/default/files/styles/basic/public/trail/A_MUWO_140321_KW-1274_2x1.jpg?itok=NHVU7nZ_' width='300px'>
-        <b>Length & Difficulty</b><br>
-        8.2 miles, Moderate/Difficult<br><br>
-                 
-       <b>Hike Description</b><br>
-        The lovely canyon along Camp Eastwood Road crosses bubbling creeks and passes through deep redwood forest groves. Enjoy views of the Pacific Ocean from the Redwood Creek Trail, as well as a mix of suny grasslands and forests, including even more redwoods! Something about the Dipsea part… If you’re here on a Sunday, stop at the Alpine Club for a drink and a snack!<br><br>
-        
-        <b/>Learn More</b><br>
-         
-        Cell service can be spotty on Mt. Tam. We strongly suggest you download this map and description (link to do that) before hitting the trail!`
-        //stats: `<h2>West Peak Loop</h2><b>Miles:</b> 11 mi<br><b>Difficulty</b>: Mindbending`
-    }
-  };
-
+          color: "red",
+          info: `<h2>West Peak Loop</h2>Some info <img src='https://www.onetam.org/sites/default/files/trails/trail_westpeak01.jpg' width='300px'>`,
+          stats: `<h2>West Peak Loop</h2><b>Miles:</b> 11 mi<br><b>Difficulty</b>: Mindbending`
+        },
+        "Redwood Creek Trail Loop": {
+          color: "red",
+          info: `<h2>West Peak Loop</h2>Some info <img src='https://www.onetam.org/sites/default/files/trails/trail_westpeak01.jpg' width='300px'>`,
+          stats: `<h2>West Peak Loop</h2><b>Miles:</b> 11 mi<br><b>Difficulty</b>: Mindbending`
+          
+      }
+    };
+  
     // Create empty object to contain geoJSON objects of trails
     var trailsGeoJSON = {}
 
   // Loop through properties and assign them to the trails
   for (trail in trailProps) {
-   
-
     // assign variable of the empty object with [trail] array
     trailsGeoJSON[trail] = L.geoJson(featuredTrails, {
       // is point to layer ok for use on polylines?
@@ -164,22 +130,24 @@
       }, 
       onEachFeature: function(feature, layer) {
         if (feature.properties.trailName == trail) {
-         // layer.bindPopup(trailProps[trail].stats)
+          layer.bindPopup(trailProps[trail].stats)
         }
-
+        
       }
-      }).addTo(map); 
+    }).addTo(map); 
   }
   // loop through the geoJSONs and add event when clicked
-  for (trail in trailsGeoJSON) {
-    
-    trailsGeoJSON[trail].on("click", function(e){
-      map.fitBounds(trailsGeoJSON[trail].getBounds()) 
-      var div = document.getElementById("info")
-      div.style.display= "inherit"
-      // use the trailsProp object to populate info
-      div.innerHTML = trailProps[trail].info
-    })
+  
+    for (trail in trailsGeoJSON) {
+      console.log(trail, trailProps)
+      //click on trail found in zooms to extent of that trail
+      trailsGeoJSON[trail].on("click", function (e) {
+        map.fitBounds(trailsGeoJSON[trail].getBounds())
+        var div = document.getElementById("info")
+        div.style.display = "inherit"
+        // use the trailsProp object to populate info
+        div.innerHTML = trailProps[trail].info
+      })
   }
 //  var trailsLayer =  L.geoJson(featuredTrails, {
 //    pointToLayer: function(feature, latLngs){
@@ -217,6 +185,17 @@
  
 
 //  map.fitBounds(bounds)
+var trailHeadIcon = L.icon({
+  iconUrl: 'SVGs/noun_Hiking Trail_2891662-01.svg',
+  iconSize: [17, 17]
+});
+var westPeak = L.geoJson(featuredTrailHeads, {
+  pointToLayer: function(feature, latLng) {
+    return L.marker(latLng, {
+      icon: trailHeadIcon
+    })
+    }
+  }).addTo(map); 
      
     </script>
 </body>
