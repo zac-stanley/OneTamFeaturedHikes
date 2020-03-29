@@ -108,29 +108,8 @@
     }
     console.log(allTrails)
 
-    // Create an object of trail properties
-    var trailProps = {
-      // looking for the value here in line 128, testing for equivalence
-      "West Peak Loop": {
-        color: "#f6c65b",
-        info: `<h2>West Peak Loop</h2>Some info <img src='https://www.onetam.org/sites/default/files/trails/trail_westpeak01.jpg' width='300px'>`, // don't want longform paragraphs here, I have all the text in the OneTamFeatureTrailHeads.js, should I access that here?
 
-      // if name is not equal to null in name variable
-      if (name != null) {
-        // if not all allTrails accessing trailName through [name] array
-
-        // This if statement adds the trail name to a JS object and the number of times the segment is found
-        // if the key is not in the object...
-        if (!allTrails[name]) {
-          // ... assign the key in the object and give it a value of 1
-          allTrails[name] = 1 // I'm not clear on what's happening with these operands here and in the else statement
-          // else it is found in the object, add 1 to the existing value
-        } else {
-          allTrails[name] += 1
-        }
-      }
-    }
-    console.log(allTrails)
+ 
 
     // Create an object of trail properties
     var trailProps = {
