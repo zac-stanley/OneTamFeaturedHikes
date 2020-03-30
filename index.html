@@ -102,8 +102,23 @@
         "Redwood Creek Trail Loop": {
           color: "red",
           info: `<h2>Redwood Creek Trail Loop</h2>Some info <img src='https://www.onetam.org/sites/default/files/trails/trail_westpeak01.jpg' width='300px'>`,
-          stats: `<h2>Redwood Creek Trail Loop</h2><b>Miles:</b> 11 mi<br><b>Difficulty</b>: Mindbending`
-          
+          stats: `<h2>Redwood Creek Trail Loop</h2><b>Miles:</b> 11 mi<br><b>Difficulty</b>: Mindbending`        
+      },
+      "Bothin Marsh Out and Back": {
+        color: "red",
+        info: `<h2>Redwood Creek Trail Loop</h2>Some info <img src='https://www.onetam.org/sites/default/files/trails/trail_westpeak01.jpg' width='300px'>`,
+        stats: `<h2>Redwood Creek Trail Loop</h2><b>Miles:</b> 11 mi<br><b>Difficulty</b>: Mindbending`
+      },
+      "Mountain Home Inn Loop": {
+        color: "red",
+        info: `<h2>Redwood Creek Trail Loop</h2>Some info <img src='https://www.onetam.org/sites/default/files/trails/trail_westpeak01.jpg' width='300px'>`,
+        stats: `<h2>Redwood Creek Trail Loop</h2><b>Miles:</b> 11 mi<br><b>Difficulty</b>: Mindbending`
+      },
+      "Pantoll Ranger Station Loop": {
+        color: "red",
+        info: `<h2>Redwood Creek Trail Loop</h2>Some info <img src='https://www.onetam.org/sites/default/files/trails/trail_westpeak01.jpg' width='300px'>`,
+        stats: `<h2>Redwood Creek Trail Loop</h2><b>Miles:</b> 11 mi<br><b>Difficulty</b>: Mindbending`
+      
       }
     };
   
@@ -140,7 +155,9 @@
   // Click map, then see if clicked point is inside the bounds of a trail
   map.on("click", function (e) {
     for (var trail in trailsGeoJSON) {
-      if (trailsGeoJSON[trail].getBounds().contains(e.latlng)) {
+      // if point is clicked, from latlng in trailHeads variable, getbounds () from the [trail] array in loop
+      if (trailsGeoJSON[trail].getBounds().contains(e.latlng)) { // latlng parameter receives argument from latlng in pointToLayer function
+        // using map property fit bounds from [trail] array and getBounds() method
         map.fitBounds(trailsGeoJSON[trail].getBounds())
         var div = document.getElementById("info")
         div.style.display = "inherit"
@@ -190,7 +207,7 @@ var trailHeadIcon = L.icon({
   iconUrl: 'SVGs/noun_Hiking Trail_2891662-01.svg',
   iconSize: [17, 17]
 });
-var westPeak = L.geoJson(featuredTrailHeads, {
+var trailHeads = L.geoJson(featuredTrailHeads, {
   pointToLayer: function(feature, latLng) {
     return L.marker(latLng, {
       icon: trailHeadIcon
