@@ -126,6 +126,8 @@
     // Create empty object to contain geoJSON objects of trails
     var trailsGeoJSON = {}
 
+    
+
   // Loop through properties and assign them to the trails
   for (trail in trailProps) {
     // assign variable of the empty object with [trail] array
@@ -154,26 +156,29 @@
       }
     }).addTo(map); 
   }
+
+
+
   // loop through the geoJSONs and add event when clicked
   // Click map, then see if clicked point is inside the bounds of a trail
-  map.on("click", function (e) {
-    for (var trail in trailsGeoJSON) {
+  // map.on("click", function (e) {
+  //   for (var trail in trailsGeoJSON) {
 
-      // When the map is clicked, the lat/lon of the point is compared to the lat/lon bounds of each trail layer group
-      // If the clicked point is within the bounds of a trail it will zoom to that trail.
-      // This method can be problematic if a lot of trails interweave.
+  //     // When the map is clicked, the lat/lon of the point is compared to the lat/lon bounds of each trail layer group
+  //     // If the clicked point is within the bounds of a trail it will zoom to that trail.
+  //     // This method can be problematic if a lot of trails interweave.
 
-      // if point is clicked, from latlng in trailHeads variable, getbounds () from the [trail] array in loop
-      if (trailsGeoJSON[trail].getBounds().contains(e.latlng)) { // latlng parameter receives argument from latlng in pointToLayer function
-        // using map property fit bounds from [trail] array and getBounds() method
-        map.fitBounds(trailsGeoJSON[trail].getBounds())
-        var div = document.getElementById("info")
-        div.style.display = "inherit"
-        // use the trailsProp object to populate info
-        div.innerHTML = trailProps[trail].info
-      }
-    } 
-  });
+  //     // if point is clicked, from latlng in trailHeads variable, getbounds () from the [trail] array in loop
+  //     if (trailsGeoJSON[trail].getBounds().contains(e.latlng)) { // latlng parameter receives argument from latlng in pointToLayer function
+  //       // using map property fit bounds from [trail] array and getBounds() method
+  //       map.fitBounds(trailsGeoJSON[trail].getBounds())
+  //       var div = document.getElementById("info")
+  //       div.style.display = "inherit"
+  //       // use the trailsProp object to populate info
+  //       div.innerHTML = trailProps[trail].info
+  //     }
+  //   } 
+  // });
   // }
 //  var trailsLayer =  L.geoJson(featuredTrails, {
 //    pointToLayer: function(feature, latLngs){
@@ -223,6 +228,22 @@ var trailHeads = L.geoJson(featuredTrailHeads, {
     },
     
   }).addTo(map); 
+  // Zoom to trail based on trailhead name.
+  // Make sure the Name property matches in both datasets, e.g., Redwood Creek Loop Trail vs. Redwood Creek Trail Loop
+  trailHeads.on("click", function (e) {
+    var name = e.sourceTarget.feature.properties.Name
+    console.log(name)
+    for (var trail in trailsGeoJSON) {
+      console.log(trail)
+      if (trail == name) {
+        map.fitBounds(trailsGeoJSON[trail].getBounds())
+        var div = document.getElementById("info")
+        div.style.display = "inherit"
+        // use the trailsProp object to populate info
+        div.innerHTML = trailProps[trail].info
+      }
+    }
+  })
      
     </script>
 </body>
