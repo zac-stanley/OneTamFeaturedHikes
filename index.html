@@ -158,6 +158,11 @@
   // Click map, then see if clicked point is inside the bounds of a trail
   map.on("click", function (e) {
     for (var trail in trailsGeoJSON) {
+
+      // When the map is clicked, the lat/lon of the point is compared to the lat/lon bounds of each trail layer group
+      // If the clicked point is within the bounds of a trail it will zoom to that trail.
+      // This method can be problematic if a lot of trails interweave.
+
       // if point is clicked, from latlng in trailHeads variable, getbounds () from the [trail] array in loop
       if (trailsGeoJSON[trail].getBounds().contains(e.latlng)) { // latlng parameter receives argument from latlng in pointToLayer function
         // using map property fit bounds from [trail] array and getBounds() method
