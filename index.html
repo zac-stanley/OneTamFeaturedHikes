@@ -92,36 +92,39 @@
     }
   //  console.log(allTrails)
 
+    
+    var trailLD = `<h2>${featuredTrailHeads.properties.lengthDiff}</h2>`
     // Create an object of trail properties
-    var trailProps = {
-      "West Peak Loop": {
+      
+      var trailProps = {
+        "West Peak Loop": {
           color: "red",
-          info: `<h2>West Peak Loop</h2>Some info <img src='https://www.onetam.org/sites/default/files/trails/trail_westpeak01.jpg' width='300px'>`,
+          info: `<h2>West Peak Loop</h2>${trailName}<br><img src='https://www.onetam.org/sites/default/files/trails/trail_westpeak01.jpg' width='300px'>`,
           stats: `<h2>West Peak Loop</h2>`
         },
         "Redwood Creek Trail Loop": {
           color: "red",
           info: `<h2>Redwood Creek Trail Loop</h2>Some info <img src='https://www.onetam.org/sites/default/files/trails/trail_westpeak01.jpg' width='300px'>`,
-          stats: `<h2>Redwood Creek Trail Loop</h2>`        
-      },
-      "Bothin Marsh Out and Back": {
-        color: "red",
-        opacity: .3,
-        info: `<h2>Bothin Marsh Out and Back</h2>Some info <img src='https://www.onetam.org/sites/default/files/trails/trail_westpeak01.jpg' width='300px'>`,
-        stats: `<h2>Bothin Marsh Out and Back</h2>`
-      },
-      "Mountain Home Inn Loop": {
-        color: "red",
-        info: `<h2>Mountain Home Inn Loop</h2>Some info <img src='https://www.onetam.org/sites/default/files/trails/trail_westpeak01.jpg' width='300px'>`,
-        stats: `<h2>Mountain Home Inn Loop</h2>`
-      },
-      "Pantoll Ranger Station Loop": {
-        color: "red",
-        info: `<h2>Pantoll Ranger Station Loop</h2>Some info <img src='https://www.onetam.org/sites/default/files/trails/trail_westpeak01.jpg' width='300px'>`,
-        stats: `<h2>Pantoll Ranger Station Loop</h2>`
-      
-      }
-    };
+          stats: `<h2>Redwood Creek Trail Loop</h2>`
+        },
+        "Bothin Marsh Out and Back": {
+          color: "red",
+          opacity: .3,
+          info: `<h2>Bothin Marsh Out and Back</h2>Some info <img src='https://www.onetam.org/sites/default/files/trails/trail_westpeak01.jpg' width='300px'>`,
+          stats: `<h2>Bothin Marsh Out and Back</h2>`
+        },
+        "Mountain Home Inn Loop": {
+          color: "red",
+          info: `<h2>Mountain Home Inn Loop</h2>Some info <img src='https://www.onetam.org/sites/default/files/trails/trail_westpeak01.jpg' width='300px'>`,
+          stats: `<h2>Mountain Home Inn Loop</h2>`
+        },
+        "Pantoll Ranger Station Loop": {
+          color: "red",
+          info: `<h2>Pantoll Ranger Station Loop</h2>Some info <img src='https://www.onetam.org/sites/default/files/trails/trail_westpeak01.jpg' width='300px'>`,
+          stats: `<h2>Pantoll Ranger Station Loop</h2>`
+
+        }
+      };
   
     // Create empty object to contain geoJSON objects of trails
     var trailsGeoJSON = {}
@@ -175,43 +178,8 @@
       }
     } 
   });
-  // }
-//  var trailsLayer =  L.geoJson(featuredTrails, {
-//    pointToLayer: function(feature, latLngs){
-//      return L.polyline (feature, latLngs);
-//    },
-//   filter: function(feature) {
-//     // Test for equivalence, then return feature
-//     if (feature.properties.trailName == "West Peak Loop")
-//           return feature
-//    },
-
-   //  style: function (feature) {
-  //  return {
-  //    color: '#FFFF00',
-  //    opacity: .5,
-  //    weight: 3
- //   }
-//  }
-
-//   var bounds = L.latLngBounds(feature.properties.trailName == "West Peak Loop");
-// Zac master
-
-  // var trailsLayer =  L.geoJson(featuredTrails, {
- //   pointToLayer: function(feature, latLngs){
-  //    return L.polyline (feature, latLngs);
-//    },
-     
-//  filter: function(feature, latLngs) {
-//   if (feature.properties.trailName == "West Peak Loop") 
-//          return feature;
-//  },
-  
 
 
- 
-
-//  map.fitBounds(bounds)
 var trailHeadIcon = L.icon({
   iconUrl: 'SVGs/noun_Hiking Trail_2891662-01.svg',
   iconSize: [17, 17]
@@ -221,7 +189,8 @@ var trailHeads = L.geoJson(featuredTrailHeads, {
     return L.marker(latLng, {
       icon: trailHeadIcon
     })
-    },
+    }
+  
     
   }).addTo(map); 
      
